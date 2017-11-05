@@ -23,7 +23,7 @@ public class Robot
         int width = playground.getWidth();
 
         //this.pos = new Point(generator.nextInt(width),generator.nextInt(height));
-        this.pos = new Point();
+        this.pos = new Point(4,4);
 
         for(int y = 0; y < height; y++)
         {
@@ -53,55 +53,60 @@ public class Robot
 
     private void move()
     {
-      if (this.lookUp()) this.moveUp();
-      else if (this.lookDown()) this.moveDown();
+      if (this.lookDown()) this.moveDown();
+      else if (this.lookUp()) this.moveUp();
       else if (this.lookRight()) this.moveRight();
       else if (this.lookLeft()) this.moveLeft();
       else this.moveUnvisitedCell();
     }
 
-    private boolean lookUp()
-    {
-      return this.getPos().y + 1 >= 0 && this.playground.isDirty(new Point(this.getPos().x,this.getPos().y + 1));
-    }
-
     private boolean lookDown()
     {
-        return this.getPos().y - 1 <= this.playground.getHeight() && this.playground.isDirty(new Point(this.getPos().x,this.getPos().y - 1));
+      return this.playground.isDirty(new Point(this.getPos().x,this.getPos().y + 1));
+    }
+
+    private boolean lookUp()
+    {
+        return this.playground.isDirty(new Point(this.getPos().x,this.getPos().y - 1));
     }
 
     private boolean lookRight()
     {
-        return this.getPos().x + 1 <= this.playground.getWidth() && this.playground.isDirty(new Point(this.getPos().x + 1,this.getPos().y));
+        return this.playground.isDirty(new Point(this.getPos().x + 1,this.getPos().y));
     }
 
     private boolean lookLeft()
     {
-        return this.getPos().x - 1 >= 0 && this.playground.isDirty(new Point(this.getPos().x - 1,this.getPos().y));
+        return this.playground.isDirty(new Point(this.getPos().x - 1,this.getPos().y));
     }
 
-    private void moveUp()
+    private void moveDown()
     {
         this.pos.move(this.pos.x,this.pos.y + 1);
     }
 
-    private void moveDown()
+    private void moveUp()
     {
         this.pos.move(this.pos.x,this.pos.y - 1);
     }
 
     private void moveRight()
     {
-        this.pos.move(this.pos.x,this.pos.y + 1);
+        this.pos.move(this.pos.x + 1,this.pos.y);
     }
 
     private void moveLeft()
     {
-        this.pos.move(this.pos.x,this.pos.y + 1);
+        this.pos.move(this.pos.x - 1,this.pos.y);
     }
 
     private void moveUnvisitedCell()
     {
+        Point unvisitedCell = this.unvisitedCells.iterator().next();
 
+        if (unvisitedCell.x > this.pos.x) this.moveRight();
+        else if (unvisitedCell.x < this.pos.x) this.moveLeft();
+        else if (unvisitedCell.y > this.pos.y) this.moveDown();
+        else this.moveUp();
     }
 }

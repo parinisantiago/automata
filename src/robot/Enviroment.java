@@ -15,7 +15,7 @@ public class Enviroment
         Robot robot = new Robot(playground);
         playground.print(robot.getPos());
 
-        while(! robot.visitedAll())
+        while(playground.isDirty())
         {
             robot.clean();
             playground.print(robot.getPos());

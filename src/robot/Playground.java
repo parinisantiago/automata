@@ -1,5 +1,6 @@
 package robot;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.awt.Point;
 
@@ -45,7 +46,8 @@ public class Playground
 
     public boolean isDirty(Point robotPos)
     {
-        return !this.board[robotPos.x][robotPos.y];
+        if (robotPos.x < 0 || robotPos.y < 0 || robotPos.x >= this.width || robotPos.y >= this.height) return false;
+        else return !this.board[robotPos.x][robotPos.y];
     }
 
     public void print(Point robotPos)
@@ -65,5 +67,18 @@ public class Playground
             System.out.println(line);
             System.out.println("---------------------");
         }
+    }
+
+    public boolean isDirty()
+    {
+        for(int y = 0; y < height; y++ )
+        {
+            for(int x = 0; x < width; x++)
+            {
+                if (!this.board[x][y]) return true;
+            }
+        }
+
+        return false;
     }
 }
