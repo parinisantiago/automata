@@ -23,7 +23,7 @@ public class Robot
         int width = playground.getWidth();
 
         //this.pos = new Point(generator.nextInt(width),generator.nextInt(height));
-        this.pos = new Point(4,4);
+        this.pos = new Point(generator.nextInt(width),generator.nextInt(height));
 
         for(int y = 0; y < height; y++)
         {
